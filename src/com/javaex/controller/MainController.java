@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/MainController")
+import com.javaex.util.WebUtil;
+
+@WebServlet("/main")
 public class MainController extends HttpServlet {
 	//필드 
 	
@@ -23,6 +25,11 @@ public class MainController extends HttpServlet {
 	
 	//일반 (get) 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			//코드 
+			System.out.println("MainController");
+	
+			//포워드 (index페이지)
+			WebUtil.forword(request, response, "/WEB-INF/views/main/index.jsp");
 	}
 	
 	
