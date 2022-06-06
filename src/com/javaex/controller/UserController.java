@@ -40,6 +40,8 @@ public class UserController extends HttpServlet {
 			System.out.println(password);
 			System.out.println(name);
 			System.out.println(gender);
+			
+			
 		}
 		
 		
