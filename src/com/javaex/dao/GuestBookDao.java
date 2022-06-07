@@ -16,7 +16,7 @@ public class GuestBookDao {
 	private ResultSet rs = null;
 	
 	private String id = "webdb";
-	private String pw = "webdb";
+	private String pw = "1234";
 	private String driver = "oracle.jdbc.driver.OracleDriver";
 	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 
