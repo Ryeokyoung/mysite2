@@ -41,6 +41,14 @@ public class UserController extends HttpServlet {
 			System.out.println(name);
 			System.out.println(gender);
 			
+			//0x333= Vo만들기 
+			UserVo userVo = new UserVo(id, password, name, gender);
+			
+			//Dao를 이용해서 저장하기 
+			//UserDao userDao = new UserDao();
+			//userDao.insert(userVo); 
+			
+			
 			
 		}
 		

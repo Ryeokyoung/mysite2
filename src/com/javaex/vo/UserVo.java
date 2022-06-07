@@ -21,7 +21,7 @@ public class UserVo {
 	
 	
 	
-	public UserVo (int no, String id, String name, String password, String gender) {
+	public UserVo (int no, String id) {
 		this.no = no;
 		this.id = id;
 		this.name = name; 
