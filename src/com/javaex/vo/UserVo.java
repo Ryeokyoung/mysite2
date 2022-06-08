@@ -29,6 +29,11 @@ public class UserVo {
 		this.gender = gender;	
 	}
 
+	public UserVo() {
+	}
+
+
+
 	//gs 
 	public int getNo() {
 		return no;

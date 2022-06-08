@@ -38,7 +38,7 @@ public class GuestBookDao {
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
 		}
-		if (count > 0) System.out.println("[" + count + "건 삭제되었습니다.]");
+		if (count > 0) System.out.println("[" + count + "건 추가되었습니다.]");
 		close();
 	}
 	

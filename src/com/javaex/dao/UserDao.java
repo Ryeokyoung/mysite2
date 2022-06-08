@@ -19,30 +19,71 @@ public class UserDao {
 	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	
 	
-	public void join(UserVo uVo) {
-		int count = -1;
+	
+	
+	private void getConnection() {
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, id, pw);
+			
+		} catch (ClassNotFoundException e) {
+			System.out.println("error: 드라이버 로딩 실패 - " + e);
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+	}
+	
+	
+	private void close() {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+	}
+
+	
+	public int insert(UserVo userVo) {
+		
+
+		
+		int count = 0;
 		getConnection();
 		
 		try {
 			String query = "insert into users\nvalues(seq_users_no.nextval, ?, ?, ?, ?) ";
 			
+			
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, uVo.getId());
-			pstmt.setString(2, uVo.getPassword());
-			pstmt.setString(3, uVo.getName());
-			pstmt.setString(4, uVo.getGender());
+			pstmt.setString(1, userVo.getId());
+			pstmt.setString(2, userVo.getPassword());
+			pstmt.setString(3, userVo.getName());
+			pstmt.setString(4, userVo.getGender());
+			
 			
 			count = pstmt.executeUpdate();
+			
+			// System.out.println("[" + count + "건 추가되었습니다.]");
 			
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
 		}
 		close();
-		if (count == 1) System.out.println("[가입 완료 되었습니다]");
+		return count;
+		
 	}
 	
 	
-	public UserVo getUser(UserVo uVo) {
+	public UserVo getUser(UserVo userVo) {
 		UserVo user = null;
 		getConnection();
 		
@@ -50,8 +91,8 @@ public class UserDao {
 			String query = "select no, name from users\nwhere id = ? and password = ? ";
 			
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, uVo.getId());
-			pstmt.setString(2, uVo.getId());
+			pstmt.setString(1, userVo.getId());
+			pstmt.setString(2, userVo.getId());
 			
 			rs = pstmt.executeQuery();
 			
@@ -90,7 +131,7 @@ public class UserDao {
 				String name = rs.getString(4);
 				String gender = rs.getString(5);
 				
-				user = new UserVo(no, id, pw, name, gender);
+				user = new UserVo(id, pw, name, gender);
 			}
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
@@ -100,7 +141,7 @@ public class UserDao {
 	}
 	
 	
-	public void modify(UserVo uVo) {
+	public void update(UserVo userVo) {
 		int count = -1;
 		getConnection();
 		
@@ -108,10 +149,10 @@ public class UserDao {
 			String query = "update users\nset password= ?, name= ?, gender= ?\nwhere no= ? ";
 			
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, uVo.getId());
-			pstmt.setString(2, uVo.getName());
-			pstmt.setString(3, uVo.getGender());
-			pstmt.setInt(4, uVo.getNo());
+			pstmt.setString(1, userVo.getId());
+			pstmt.setString(2, userVo.getName());
+			pstmt.setString(3, userVo.getGender());
+			pstmt.setInt(4, userVo.getNo());
 			
 			count = pstmt.executeUpdate();
 			
@@ -121,35 +162,17 @@ public class UserDao {
 		close();
 		if (count != -1) System.out.println("[" + count + "건 수정되었습니다]");
 	}
+
+
 	
-	
-	private void getConnection() {
-		try {
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, id, pw);
-			
-		} catch (ClassNotFoundException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
-			
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
+		
 	}
+
+
+
+
 	
+
 	
-	private void close() {
-		try {
-			if (rs != null) {
-				rs.close();
-			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-	}
-}
+
+		
