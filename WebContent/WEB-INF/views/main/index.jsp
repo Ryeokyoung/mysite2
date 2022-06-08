@@ -86,7 +86,8 @@
 		<!-- //container -->
 		
 		
-		<div id="footer">
+		<!-- "footer"-->
+			<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 			Copyright ⓒ 2022 김려경. All right reserved
 		</div>
 		<!-- //footer -->
